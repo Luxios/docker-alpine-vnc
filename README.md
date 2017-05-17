@@ -44,6 +44,17 @@ Basic build command as you'd expect:
 docker build -t "version42/alpine-vnc" .
 ```
 
+### Launching
+
+> So you want to actually launch the image?  OK...
+
+The basic launch is what you'd expect with one additional flag:
+```bash
+docker run --cap-add=SYS_ADMIN -p 5900:5900 version42/alpine-vnc
+```
+
+See that `--cap-add`?  We need that for certain things you may install like [Chromium](https://www.chromium.org/Home).  Without this you'll get namespace issues and other things that will pop-up unless you run those applications with specialized options (such as `--no-sandbox` for Chromium).  Some applications, like [Firefox](http://www.getfirefox.com), don't suffer from the same issues as others do and therefore it **may** not be necessary; however, I still recommend adding it as it will reduce some errors for basic container usage.  Remove it if you are sure you don't need it, but I keep it around for this particular image as I use this mostly for testing.
+
 ### Deployment
 
 > What, the Docker Hub automated process not good enough for you?
